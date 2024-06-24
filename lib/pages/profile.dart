@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import '../widgets/multi_select_form_field.dart'; // Ensure this import is correct
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -15,20 +18,20 @@ class _ProfilePageState extends State<ProfilePage> {
   List<String> skills = ['Skill1', 'Skill2', 'Skill3']; // Example skills
   List<String> selectedSkills = [];
   List<DateTime> availability = [];
-  String selectedState;
+  String selectedState = 'State1'; // Example default state
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
+      appBar: AppBar(title: const Text('Profile')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               TextFormField(
                 controller: fullNameController,
-                decoration: InputDecoration(labelText: 'Full Name'),
+                decoration: const InputDecoration(labelText: 'Full Name'),
                 maxLength: 50,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -39,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               TextFormField(
                 controller: address1Controller,
-                decoration: InputDecoration(labelText: 'Address 1'),
+                decoration: const InputDecoration(labelText: 'Address 1'),
                 maxLength: 100,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -50,12 +53,12 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               TextFormField(
                 controller: address2Controller,
-                decoration: InputDecoration(labelText: 'Address 2'),
+                decoration: const InputDecoration(labelText: 'Address 2'),
                 maxLength: 100,
               ),
               TextFormField(
                 controller: cityController,
-                decoration: InputDecoration(labelText: 'City'),
+                decoration: const InputDecoration(labelText: 'City'),
                 maxLength: 100,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -74,15 +77,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 }).toList(),
                 onChanged: (newValue) {
                   setState(() {
-                    selectedState = newValue;
+                    selectedState = newValue!;
                   });
                 },
-                decoration: InputDecoration(labelText: 'State'),
+                decoration: const InputDecoration(labelText: 'State'),
                 validator: (value) => value == null ? 'Field required' : null,
               ),
               TextFormField(
                 controller: zipCodeController,
-                decoration: InputDecoration(labelText: 'Zip Code'),
+                decoration: const InputDecoration(labelText: 'Zip Code'),
                 maxLength: 9,
                 validator: (value) {
                   if (value == null || value.length < 5) {
@@ -92,46 +95,42 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
               ),
               MultiSelectFormField(
-                autovalidate: false,
+                dataSource: skills,
                 titleText: 'Skills',
-                dataSource: [
-                  {'display': 'Skill1', 'value': 'Skill1'},
-                  {'display': 'Skill2', 'value': 'Skill2'},
-                  {'display': 'Skill3', 'value': 'Skill3'},
-                ],
-                textField: 'display',
-                valueField: 'value',
-                okButtonLabel: 'OK',
-                cancelButtonLabel: 'CANCEL',
                 hintText: 'Please select one or more skills',
                 initialValue: selectedSkills,
                 onSaved: (value) {
-                  if (value == null) return;
                   setState(() {
-                    selectedSkills = value;
+                    selectedSkills = value!;
                   });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select at least one skill';
+                  }
+                  return null;
                 },
               ),
               TextFormField(
                 controller: preferencesController,
-                decoration: InputDecoration(labelText: 'Preferences'),
+                decoration: const InputDecoration(labelText: 'Preferences'),
                 maxLines: 3,
               ),
               ElevatedButton(
                 onPressed: () async {
-                  DateTime picked = await showDatePicker(
+                  DateTime? picked = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2021),
                     lastDate: DateTime(2025),
                   );
-                  if (picked != null && !availability.contains(picked)) {
+                  if (picked != null) {
                     setState(() {
                       availability.add(picked);
                     });
                   }
                 },
-                child: Text('Select Availability Dates'),
+                child: const Text('Select Availability Dates'),
               ),
               Wrap(
                 children: availability.map((date) {
@@ -145,12 +144,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Handle profile update
                 },
-                child: Text('Update Profile'),
+                child: const Text('Update Profile'),
               ),
             ],
           ),

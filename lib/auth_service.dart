@@ -1,15 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'pages/home.dart';
+import 'pages/login.dart';
 
 class AuthService {
-  // Determine if the user is authenticated
-  handleAuth() {
+  // Handle Authentication
+  Widget handleAuth() {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData) {
           return HomePage();
         } else {
           return LoginPage();
@@ -19,22 +21,18 @@ class AuthService {
   }
 
   // Sign out
-  signOut() {
+  void signOut() {
     FirebaseAuth.instance.signOut();
   }
 
   // Sign in
-  signIn(AuthCredential authCreds) {
+  void signIn(AuthCredential authCreds) {
     FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 
-  // Sign in with email and password
-  signInWithEmail(String email, String password) {
-    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-  }
-
-  // Register with email and password
-  registerWithEmail(String email, String password) {
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+  void signInWithOTP(String smsCode, String verId) {
+    AuthCredential authCreds = PhoneAuthProvider.credential(
+        verificationId: verId, smsCode: smsCode);
+    signIn(authCreds);
   }
 }

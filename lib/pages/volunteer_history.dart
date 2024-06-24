@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class VolunteerHistoryPage extends StatelessWidget {
+  const VolunteerHistoryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // Dummy data for history
-    final List<Map<String, String>> history = [
+    final List<Map<String, String?>> history = [
       {
         'eventName': 'Event 1',
         'eventDescription': 'Description for event 1',
@@ -22,9 +24,9 @@ class VolunteerHistoryPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text('Volunteer History')),
+      appBar: AppBar(title: const Text('Volunteer History')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -39,11 +41,11 @@ class VolunteerHistoryPage extends StatelessWidget {
                 rows: history.map((event) {
                   return DataRow(
                     cells: <DataCell>[
-                      DataCell(Text(event['eventName'])),
-                      DataCell(Text(event['eventDescription'])),
-                      DataCell(Text(event['location'])),
-                      DataCell(Text(event['date'])),
-                      DataCell(Text(event['status'])),
+                      DataCell(Text(event['eventName'] ?? '')),
+                      DataCell(Text(event['eventDescription'] ?? '')),
+                      DataCell(Text(event['location'] ?? '')),
+                      DataCell(Text(event['date'] ?? '')),
+                      DataCell(Text(event['status'] ?? '')),
                     ],
                   );
                 }).toList(),

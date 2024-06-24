@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:your_app_name/services/events.dart';
-import 'package:your_app_name/widgets/multi_select_form_field.dart';
+import '../services/events.dart';
+import '../widgets/multi_select_form_field.dart';
 
 class EventMgmtPage extends StatefulWidget {
   @override
@@ -107,7 +107,7 @@ class _EventMgmtPageState extends State<EventMgmtPage> {
                 },
                 child: const Text('Select Event Date'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Handle event creation
