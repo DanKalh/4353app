@@ -1,16 +1,22 @@
-# soft_design_app
+Description
 
-A new Flutter project.
+In this assignment we will come up with initial design for a software application that you will build in this semester. We will not be writing any code in this assignment, but only looking at some initial design ideas and high-level design.
 
-## Getting Started
+Problem Statement
 
-This project is a starting point for a Flutter application.
+A non-profit organization has requested to build a software application that will help manage and optimize their volunteer activities. The application should help the organization efficiently allocate volunteers to different events and tasks based on their preferences, skills, and availability. The application should consider the following criteria:
 
-A few resources to get you started if this is your first Flutter project:
+Volunteer’s location
+Volunteer’s skills and preferences
+Volunteer’s availability
+Event requirements and location
+Task urgency and priority
+The software must include the following components:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Login (Allow volunteers and administrators to register if not already registered)
+User Registration (Initially only username and password, followed by email verification)
+User Profile Management (After registration, users should log in to complete their profile, including location, skills, preferences, and availability)
+Event Management (Administrators can create and manage events, specifying required skills, location, and urgency)
+Volunteer Matching (A module that matches volunteers to events/tasks based on their profiles and the event requirements)
+Notification System (Send notifications to volunteers for event assignments, updates, and reminders)
+Volunteer History (Track volunteer participation history and performance)
